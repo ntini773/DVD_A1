@@ -1,0 +1,13 @@
+A = 1100 (12) and B = 0111 (7)
+
+    1100   A
+x   0111   B
+------------
+    1100   pp0 = A AND b0 (b0 = 1), shifted 0
+   11000   pp1 = A AND b1 (b1 = 1), shifted 1
+  110000   pp2 = A AND b2 (b2 = 1), shifted 2
+ 0000000   pp3 = A AND b3 (b3 = 0), shifted 3
+------------
+01010100   P = 84
+
+Check: 12 x 7 = 84  ->  OK
