@@ -1,0 +1,6 @@
+# LibreLane run folders are huge - submit only final metrics.json and GDS
+pnr/runs/
+# Simulation outputs
+sim
+gls
+*.vcd
