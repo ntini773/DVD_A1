@@ -101,9 +101,107 @@ git commit -m "Part B: synthesis, netlist, stat report, netlist simulation"
 
 ### Part C - Static timing analysis
 
+Run inside the IIC-OSIC-TOOLS container (OpenSTA 3.1.0), from the repo root.
+
+**Setup - enter the container and select the PDK**
+```bash
+docker exec -it iic-osic bash          # on the host
+cd /foss/designs/mult4_team07
+sta -version                           # 3.1.0
+sak-pdk sky130A
+echo $PDK_ROOT $PDK                    # /foss/pdks sky130A
+ls $PDK_ROOT/sky130A/libs.ref/sky130_fd_sc_hd/lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+```
+
+**Task 1 - write `sta/sta.tcl` and run it at T = 10 ns** (7 steps: read_liberty, read_verilog + link_design, create_clock, set_input_delay 1.0, set_output_delay 1.0, report_worst_slack, report_checks. The period defaults to 10 ns and can be changed with `STA_PERIOD`.)
+```bash
+STA_PERIOD=10.0 STA_REPORT=sta/timing_10ns.rpt sta -exit sta/sta.tcl 2>&1 | tee sta/sta_10ns.log
+```
+Result: worst slack = **+7.396 ns**. So T_min = 10 - 7.396 = **2.604 ns**, F_max = 1000 / 2.604 = **384.02 MHz**.
+
+**Task 1 (cont.) - run again at T = T_min rounded to 0.01 ns (2.60 ns)**
+```bash
+STA_PERIOD=2.60 STA_REPORT=sta/timing_tmin.rpt sta -exit sta/sta.tcl 2>&1 | tee sta/sta_tmin.log
+STA_PERIOD=2.60 sta -exit sta/sta.tcl     # writes the deliverable sta/mult_array_timing.rpt
+```
+Result: worst slack = **-0.004 ns** (close to 0; the 0.004 ns comes from rounding 2.604 down to 2.60).
+
+**Tasks 2 and 3 - critical path** (from `sta/mult_array_timing.rpt`)
+- Start point: `_095_` = input register `a_r[1]` (dfrtp_1). End point: `_092_` = output register `p[6]` (dfrtp_1).
+- Cells: `_095_` dfrtp_1 -> `_039_` clkinv_1 -> `_047_` o311ai_0 -> `_050_` a21oi_1 -> `_063_` maj3_1 -> `_064_` xnor2_1 -> `_066_` maj3_1 -> `_075_` maj3_1 -> `_079_` xnor3_1 -> `_092_` dfrtp_1
+- 10 cells: 2 flip-flops + 8 combinational cells, compared with the estimate of 2N = 8 full-adder delays.
+
+**All Part C runs in one go**
+```bash
+bash report/partC/run_partC.sh
+```
+Results table: `report/partC/results_table.md`
+
+**Commit**
+```bash
+git add sta report/partC
+git commit -m "Part C: OpenSTA script, timing reports, T_min and F_max"
+```
+
 ### Part D - Physical design
+
+Run inside the IIC-OSIC-TOOLS container with LibreLane v3.1.0.dev3 (Classic flow). The container's default PDK is `ihp-sg13g2`, so `--pdk sky130A --scl sky130_fd_sc_hd` is given on every run.
+
+**Task 1 - write `pnr/config.json` and run the flow**
+
+Start period = 1.2 x T_min = 1.2 x 2.604 = 3.125 ns, rounded up to the next 0.5 ns = **3.5 ns**. After each setup failure, add 0.5 ns and run again.
+```bash
+cd /foss/designs/mult4_team07
+bash report/partD/run_partD.sh 3.5 8.0
+# for each period P = 3.5, 4.0, ... the script writes a config with CLOCK_PERIOD = P and runs:
+#   cd pnr && librelane --pdk sky130A --scl sky130_fd_sc_hd --run-tag pXns --overwrite config_pXns.json
+# it stops at the first run with setup slack >= 0, DRC = 0 and LVS = 0
+```
+Configs and metrics of every attempt: `report/partD/attempts/`. Summary: `report/partD/attempts.tsv`.
+
+Every attempt (setup slack = worst over all 9 signoff corners; the limiting corner is `max_ss_100C_1v60`):
+
 | Attempt | CLOCK_PERIOD (ns) | Setup slack (ns) | DRC | LVS | Result |
 |---------|-------------------|------------------|-----|-----|--------|
+| 1  | 3.5 | -2.184 | 0 | 0 | FAIL (setup) |
+| 2  | 4.0 | -1.684 | 0 | 0 | FAIL (setup) |
+| 3  | 4.5 | -1.184 | 0 | 0 | FAIL (setup) |
+| 4  | 5.0 | -0.682 | 0 | 0 | FAIL (setup) |
+| 5  | 5.5 | -0.208 | 0 | 0 | FAIL (setup) |
+| 6  | 6.0 | -0.154 | 0 | 0 | FAIL (setup) |
+| 7  | 6.5 | -0.224 | 0 | 0 | FAIL (setup) |
+| 8  | 7.0 | -0.137 | 0 | 0 | FAIL (setup) |
+| 9  | 7.5 | -0.100 | 0 | 0 | FAIL (setup) |
+| 10 | **8.0** | **+0.400** | 0 | 0 | **PASS** |
+
+**Copy the final results** (run `p8ns`)
+```bash
+cp report/partD/attempts/config_p8ns.json pnr/config.json
+cp pnr/runs/p8ns/final/metrics.json pnr/metrics.json
+cp pnr/runs/p8ns/final/gds/mult_array.gds pnr/mult_array.gds
+```
+
+**Tasks 2 to 4 - read the numbers from `pnr/metrics.json`**
+```bash
+grep -E '"design__instance__count"|core__area|die__area|"route__wirelength"|"timing__setup__ws"|drc_error|lvs_error' pnr/metrics.json
+grep -E 'instance__count__class' pnr/metrics.json      # buffers, tap, fill cells added
+```
+Result: CLOCK_PERIOD 8.0 ns, setup slack +0.400 ns, post-route F_max = 1000 / (8.0 - 0.400) = **131.58 MHz** (Part C: 384.02 MHz), core area 17759.5 um^2, wirelength 2499 um, 0 DRC, 0 LVS. Full table: `report/partD/Part_D_Report.md`.
+
+**Task 5 - layout screenshots in KLayout**
+```bash
+klayout -l report/partD/sky130A.lyp pnr/mult_array.gds
+```
+Saved: `report/partD/klayout_full_die.png` (whole die), `report/partD/klyaout_zoom.png` (cell rows and metal wires).
+
+**Commit**
+```bash
+git add pnr/config.json pnr/metrics.json pnr/mult_array.gds report/partD
+git commit -m "Part D: LibreLane flow, final GDS and metrics"
+```
+
+### Report
+`report/report.pdf`: results tables for Parts A to D, screenshots, and answers to the questions in Section 10.
 
 ## Use of AI tools
 <!-- Say which parts used AI help, as the assignment requires. -->

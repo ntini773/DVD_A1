@@ -23,7 +23,7 @@ Command for all runs: `bash report/partD/run_partD.sh 3.5 8.0` (see the script h
 | 9 | 7.5 | -0.100 | +0.136 | 0 | 0 | FAIL (setup) |
 | 10 | **8.0** | **+0.400** | +0.136 | 0 | 0 | **PASS** |
 
-The slack is the worst slack over all three corners. The limiting corner is `nom_slow_1p08V_125C`.
+The slack is the worst slack over all 9 signoff corners (tt / ss / ff, each with min / nom / max wire RC). The limiting corner is `max_ss_100C_1v60` (slow-slow transistors, 1.60 V, 100 C, maximum wire RC).
 Slack does not improve evenly with the period: the flow's timing repair and the clock tree change between runs.
 
 ## Part D results table (final run, 8.0 ns)
@@ -49,7 +49,7 @@ Slack does not improve evenly with the period: the flow's timing repair and the 
 - The 3.5 ns start point from Part C is too tight for the slow corner. It reaches the typical-corner result only at much larger periods.
 
 ## Cells added by place and route
-- Cell count after synthesis: 63. After place and route: 86 non-tap cells. The 23 extra cells are 21 timing repair buffers and 3 clock buffers (the 86 vs 63+24 gap of one cell is not traced).
+- Cell count after synthesis: 63. After place and route: 86 non-tap cells. LibreLane runs its own Yosys synthesis, which gives 62 logic and flip-flop cells (16 sequential + 42 multi-input + 4 inverters, from `metrics.json`). 62 + 21 timing repair buffers + 3 clock buffers = 86.
 - Tap cells (245) connect the wells to the power rails. Filler and decap cells (1552) fill empty space in the rows. They have no logic function.
 - Standard-cell area is 1264.96 um^2 (7.1 % utilisation of the 17759.5 um^2 core). The die is large for this design by the assignment's rule.
 
