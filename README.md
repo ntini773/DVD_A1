@@ -7,11 +7,10 @@
 | nitin | 2023112026 |
 
 ## Environment
-- OS: Ubuntu 22.04, native install (no Docker)
-- Simulation, synthesis, timing (Parts A to C): pixi environment with iverilog, yosys, openroad (OpenSTA) and gtkwave
-- Physical design (Part D): LibreLane, installed with Nix
+- Host OS: Ubuntu 22.04
+- Parts A and B (simulation, synthesis): pixi environment on the host with iverilog, yosys and gtkwave (`pixi shell`)
+- Parts C and D (OpenSTA, LibreLane): IIC-OSIC-TOOLS Docker container `iic-osic`. The project folder is mounted at `/foss/designs/mult4_team07`.
 - PDK: sky130A (`$PDK_ROOT/sky130A`), standard cell library sky130_fd_sc_hd, typical corner tt_025C_1v80
-- Used instead of the IIC-OSIC-TOOLS Docker image. Tool versions can differ slightly from the Docker image, so small differences in numbers are possible.
 
 ## Commands run (in order)
 
@@ -45,9 +44,9 @@ gtkwave mult.vcd
 ```
 Result: `PASS: 256 vectors checked, 0 errors`  (saved in `report/partA/pass_line.txt`)
 
-**Task 5 - own example and waveform** (roll number digit used: FILL_IN, so A = digit + 5, B = 7, or 9 if A = 7)
+**Task 5 - own example and waveform** (roll number digit used: 4, from 2023112014, so A = 4 + 5 = 9, B = 7, P = 63. The other roll number, 2023112026, would give A = 11)
 ```bash
-bash report/partA/run_partA.sh <last_digit>
+bash report/partA/run_partA.sh 4
 gtkwave report/partA/example.vcd --script report/partA/gtkwave_view.tcl
 ```
 Saved in `report/partA/`: `hand_example.txt`, `example_result.txt`, `waveform.png` (latency marked), `tb_example.v`.
