@@ -1,0 +1,74 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Tools used in each stage of the flow.}}{1}{table.caption.1}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:tools}{{1}{1}{Tools used in each stage of the flow}{table.caption.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Design and Verification (Part A)}{1}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}How the array multiplier works}{1}{subsection.2.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Connections of the array ($j = 0\ldots  3$; the carry into each row is $c_i[0] = 0$).}}{1}{table.caption.2}\protected@file@percent }
+\newlabel{tab:conn}{{2}{1}{Connections of the array ($j = 0\ldots 3$; the carry into each row is $c_i[0] = 0$)}{table.caption.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}RTL implementation}{1}{subsection.2.2}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Block diagram: 8 input flip-flops, 16 AND gates, 12 full adders in three ripple-carry rows (red arrows are carries), and 8 output flip-flops.}}{2}{figure.caption.3}\protected@file@percent }
+\newlabel{fig:block}{{1}{2}{Block diagram: 8 input flip-flops, 16 AND gates, 12 full adders in three ripple-carry rows (red arrows are carries), and 8 output flip-flops}{figure.caption.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Testbench}{2}{subsection.2.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Testbench requirements and how \texttt  {tb/tb\_mult.v} meets them.}}{2}{table.caption.5}\protected@file@percent }
+\newlabel{tab:tb}{{3}{2}{Testbench requirements and how \texttt {tb/tb\_mult.v} meets them}{table.caption.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Simulation results and error test}{2}{subsection.2.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Hand-worked example}{2}{subsection.2.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces Row-by-row evaluation of $9 \times 7$ in the array (all values in binary). No full adder produces a carry for this input pair.}}{2}{table.caption.6}\protected@file@percent }
+\newlabel{tab:hand}{{4}{2}{Row-by-row evaluation of $9 \times 7$ in the array (all values in binary). No full adder produces a carry for this input pair}{table.caption.6}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}Waveform}{2}{subsection.2.6}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces GTKWave view of \texttt  {clk}, \texttt  {rst\_n}, \texttt  {a}, \texttt  {b} and \texttt  {p} for A = 9, B = 7 (10\,ns clock period). The inputs change at 30\,ns and are captured at clock edge 1 (35\,ns). The product 0x3F = 63 appears on \texttt  {p} at edge 2 (45\,ns), so the latency is 2 clock cycles (20\,ns).}}{3}{figure.caption.4}\protected@file@percent }
+\newlabel{fig:wave}{{2}{3}{GTKWave view of \texttt {clk}, \texttt {rst\_n}, \texttt {a}, \texttt {b} and \texttt {p} for A = 9, B = 7 (10\,ns clock period). The inputs change at 30\,ns and are captured at clock edge 1 (35\,ns). The product 0x3F = 63 appears on \texttt {p} at edge 2 (45\,ns), so the latency is 2 clock cycles (20\,ns)}{figure.caption.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}Synthesis (Part B)}{3}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.1}What synthesis does}{3}{subsection.3.1}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Steps of \texttt  {synth/synth.tcl}, run with \texttt  {yosys -c synth/synth.tcl}.}}{3}{table.caption.7}\protected@file@percent }
+\newlabel{tab:synth}{{5}{3}{Steps of \texttt {synth/synth.tcl}, run with \texttt {yosys -c synth/synth.tcl}}{table.caption.7}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.2}Results}{3}{subsection.3.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Part B results (from \texttt  {synth/mult\_array\_stat.rpt}).}}{3}{table.caption.8}\protected@file@percent }
+\newlabel{tab:partB}{{6}{3}{Part B results (from \texttt {synth/mult\_array\_stat.rpt})}{table.caption.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.3}Gate-level simulation}{3}{subsection.3.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Timing (Part C)}{3}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Static timing analysis}{3}{subsection.4.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Maximum frequency}{4}{subsection.4.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Part C results (OpenSTA, typical corner, pre-layout).}}{4}{table.caption.9}\protected@file@percent }
+\newlabel{tab:partC}{{7}{4}{Part C results (OpenSTA, typical corner, pre-layout)}{table.caption.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Critical path}{4}{subsection.4.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Critical path at $T = 2.60$\,ns (\texttt  {sta/mult\_array\_timing.rpt}). fa$r$\_$c$ is the full adder in row $r$, column $c$; an overline marks a signal ABC built inverted. The capture flip-flop needs 0.134\,ns of setup, so the required time is $2.600 - 0.134 = 2.466$\,ns and the slack is $2.466 - 2.471 = -0.004$\,ns.}}{4}{table.caption.10}\protected@file@percent }
+\newlabel{tab:path}{{8}{4}{Critical path at $T = 2.60$\,ns (\texttt {sta/mult\_array\_timing.rpt}). fa$r$\_$c$ is the full adder in row $r$, column $c$; an overline marks a signal ABC built inverted. The capture flip-flop needs 0.134\,ns of setup, so the required time is $2.600 - 0.134 = 2.466$\,ns and the slack is $2.466 - 2.471 = -0.004$\,ns}{table.caption.10}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Physical Design (Part D)}{4}{section.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}The flow}{4}{subsection.5.1}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Final layout in KLayout. (a) The 150\,$\mu $m $\times $ 150\,$\mu $m die: 47 standard-cell rows filled with tap, decap and filler cells, with the routed logic in the centre and wires running to the I/O pins on the edges. (b) Zoomed view: the VPWR/VGND rails bound each row, which holds standard cells (e.g.\ \texttt  {dfrtp\_1}, \texttt  {decap\_12}). Metal wires and vias connect the cell pins.}}{5}{figure.caption.11}\protected@file@percent }
+\newlabel{fig:layout}{{3}{5}{Final layout in KLayout. (a) The 150\,$\mu $m $\times $ 150\,$\mu $m die: 47 standard-cell rows filled with tap, decap and filler cells, with the routed logic in the centre and wires running to the I/O pins on the edges. (b) Zoomed view: the VPWR/VGND rails bound each row, which holds standard cells (e.g.\ \texttt {dfrtp\_1}, \texttt {decap\_12}). Metal wires and vias connect the cell pins}{figure.caption.11}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Main stages of the LibreLane Classic flow.}}{5}{table.caption.12}\protected@file@percent }
+\newlabel{tab:flow}{{9}{5}{Main stages of the LibreLane Classic flow}{table.caption.12}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Timing closure}{5}{subsection.5.2}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces All LibreLane runs. Slack is the worst over the 9 signoff corners. Every run has 0 DRC errors and 0 LVS errors; FAIL means setup slack $<$ 0\,ns.}}{5}{table.caption.13}\protected@file@percent }
+\newlabel{tab:runs}{{10}{5}{All LibreLane runs. Slack is the worst over the 9 signoff corners. Every run has 0 DRC errors and 0 LVS errors; FAIL means setup slack $<$ 0\,ns}{table.caption.13}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces Part D results for the final run (from \texttt  {pnr/metrics.json}).}}{6}{table.caption.14}\protected@file@percent }
+\newlabel{tab:partD}{{11}{6}{Part D results for the final run (from \texttt {pnr/metrics.json})}{table.caption.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}Cells added by place and route}{6}{subsection.5.3}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces Cells added by the flow, with their total area and purpose.}}{6}{table.caption.15}\protected@file@percent }
+\newlabel{tab:added}{{12}{6}{Cells added by the flow, with their total area and purpose}{table.caption.15}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Signoff}{6}{subsection.5.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces Setup and hold slack at the 9 signoff corners of the final run (period 8.0\,ns). $F_{\max } = 1000/(8.0 - \text  {setup slack})$.}}{6}{table.caption.16}\protected@file@percent }
+\newlabel{tab:corners}{{13}{6}{Setup and hold slack at the 9 signoff corners of the final run (period 8.0\,ns). $F_{\max } = 1000/(8.0 - \text {setup slack})$}{table.caption.16}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Answers to Questions}{6}{section.6}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces Scaling from 4 to 8 bits (counts in cells; path length in full-adder delays).}}{7}{table.caption.17}\protected@file@percent }
+\newlabel{tab:scale}{{14}{7}{Scaling from 4 to 8 bits (counts in cells; path length in full-adder delays)}{table.caption.17}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Conclusion}{7}{section.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {A}Logs and Detailed Tables}{8}{appendix.A}\protected@file@percent }
+\newlabel{app:logs}{{A}{8}{Logs and Detailed Tables}{appendix.A}{}}
+\newlabel{lst:fail}{{1}{8}{Error test (\texttt {sum = a \^{} b}): first mismatches and summary}{lstlisting.1}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {1}{\ignorespaces Error test (\texttt  {sum = a \^{} b}): first mismatches and summary.}}{8}{lstlisting.1}\protected@file@percent }
+\newlabel{lst:gls}{{2}{8}{Gate-level simulation output (\texttt {report/partB/gls.log})}{lstlisting.2}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {2}{\ignorespaces Gate-level simulation output (\texttt  {report/partB/gls.log}).}}{8}{lstlisting.2}\protected@file@percent }
+\newlabel{lst:rsz}{{3}{8}{LibreLane timing repair before routing, 6.0\,ns run: timing is closed to +0.068\,ns; the final slack after routing is $-0.154$\,ns}{lstlisting.3}{}}
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {3}{\ignorespaces LibreLane timing repair before routing, 6.0\,ns run: timing is closed to +0.068\,ns; the final slack after routing is $-0.154$\,ns.}}{8}{lstlisting.3}\protected@file@percent }
+\@writefile{lol}{\contentsline {lstlisting}{\numberline {4}{\ignorespaces OpenSTA critical-path report at $T = 2.60$\,ns (\texttt  {sta/mult\_array\_timing.rpt}; the reset recovery check, slack +1.828\,ns, is omitted).}}{8}{lstlisting.4}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {15}{\ignorespaces All cells in the synthesised netlist (\texttt  {synth/mult\_array\_stat.rpt}).}}{8}{table.caption.19}\protected@file@percent }
+\newlabel{tab:cells}{{15}{8}{All cells in the synthesised netlist (\texttt {synth/mult\_array\_stat.rpt})}{table.caption.19}{}}
+\gdef \@abspage@last{8}
