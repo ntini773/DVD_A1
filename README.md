@@ -201,7 +201,21 @@ git commit -m "Part D: LibreLane flow, final GDS and metrics"
 ```
 
 ### Report
-`report/report.pdf`: results tables for Parts A to D, screenshots, and answers to the questions in Section 10.
+`report/report.pdf` (8 pages): sections 1 Introduction, 2 Design and verification (Part A), 3 Synthesis (Part B), 4 Timing (Part C), 5 Physical design (Part D), 6 Answers to questions, 7 Conclusion, then Individual Contributions and an appendix with logs. It holds the results tables for Parts A to D, the waveform, block diagram and layout screenshots, and the answers to questions 1 to 6. The LaTeX source is `report/latex/report.tex`; to rebuild it:
+```bash
+cd report/latex
+pdflatex report.tex && pdflatex report.tex   # run twice so the cross-references update
+cp report.pdf ../report.pdf
+```
+
+## Individual contributions
+The work was divided equally: Bhargav did Parts A and C, answered Q2 and Q6, maintained this README and wrote the report; Nitin did Parts B and D, drew the block diagram and answered Q1, Q3, Q4 and Q5. Both cross-checked each other's results. Details are in the report.
 
 ## Use of AI tools
-<!-- Say which parts used AI help, as the assignment requires. -->
+An AI assistant was used during this assignment, as the assignment allows. We used it to:
+- check our deliverables against the assignment guide;
+- analyse the tool logs and metrics, for example to explain why the setup slack changes unevenly across the LibreLane runs and to trace the critical path back to the full adders;
+- write the Part C and Part D sections of this README from our logs and scripts;
+- draft and typeset the report from our results.
+
+All RTL, scripts and tool runs are our own, and every number in this README and the report comes from our own runs. We reviewed every part and can explain each line.
